@@ -57,7 +57,7 @@ const transactions = [
 const Payment = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-12 px-4">
-      <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8">
+      <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8 mt-14">
         {/* Current Credits Section */}
         <div className="mb-8 p-6 bg-indigo-50 border border-indigo-200 rounded-lg flex flex-col sm:flex-row items-center justify-between">
           <div className="flex items-center mb-4 sm:mb-0">

@@ -399,7 +399,7 @@ const Emails = () => {
     <div className="container mx-auto p-2 sm:p-4 bg-customLightBlue rounded-xl shadow-lg">
       <Input
         placeholder="Search...(2s delay)"
-        className="w-52 mb-2 p-2 border-2 focus:border-customLightGold rounded-xl border-customRed transition duration-200"
+        className="mt-20 w-52 mb-2 p-2 border-2 focus:border-customLightGold rounded-xl border-customRed transition duration-200"
         onChange={handleSearch}
       />
       <p className="text-2xl font-semibold text-customGold mb-4 my-4">

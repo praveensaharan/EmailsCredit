@@ -110,7 +110,7 @@ const Unblure = () => {
   if (loading) {
     return (
       <div className="container mx-auto p-4">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 mt-20">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
@@ -119,26 +119,26 @@ const Unblure = () => {
               <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-customGold via-customBlue to-customRed"></div>
               <div className="animate-pulse flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
                 <div>
-                  <div className="h-6 bg-slate-200 rounded w-24 mb-2"></div>
-                  <div className="h-4 bg-slate-200 rounded w-32"></div>
+                  <div className="h-6 bg-slate-200 rounded w-24 mb-2 wave-bg"></div>
+                  <div className="h-4 bg-slate-200 rounded w-32 wave-bg"></div>
                 </div>
-                <div className="shrink-0 mt-4 sm:mt-0 rounded-full bg-slate-200 h-16 w-16"></div>
+                <div className="shrink-0 mt-4 sm:mt-0 rounded-full bg-slate-200 h-16 w-16 wave-bg"></div>
               </div>
               <dl className="mt-6 grid grid-cols-1 gap-4 sm:gap-6 flex-grow">
                 <div>
-                  <div className="h-4 bg-slate-200 rounded w-20 mb-2"></div>
+                  <div className="h-4 bg-slate-200 rounded w-20 mb-2 wave-bg"></div>
                   <div className="space-y-2">
-                    <div className="h-3 bg-slate-200 rounded"></div>
-                    <div className="h-3 bg-slate-200 rounded w-3/4"></div>
+                    <div className="h-3 bg-slate-200 rounded wave-bg"></div>
+                    <div className="h-3 bg-slate-200 rounded w-3/4 wave-bg"></div>
                   </div>
                 </div>
                 <div className="flex justify-center items-center sm:justify-end">
-                  <div className="h-8 bg-slate-200 rounded w-24"></div>
+                  <div className="h-8 bg-slate-200 rounded w-24 wave-bg"></div>
                 </div>
               </dl>
               <div className="flex flex-col sm:flex-row sm:justify-between mt-auto pt-4">
-                <div className="h-4 bg-slate-200 rounded w-16 mb-2 sm:mb-0"></div>
-                <div className="h-4 bg-slate-200 rounded w-16"></div>
+                <div className="h-4 bg-slate-200 rounded w-16 mb-2 sm:mb-0 wave-bg"></div>
+                <div className="h-4 bg-slate-200 rounded w-16 wave-bg"></div>
               </div>
             </div>
           ))}
@@ -153,7 +153,7 @@ const Unblure = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 mt-20">
         {data.map((item) => (
           <UnblureCard
             key={item.id}
