@@ -60,30 +60,39 @@
 import React, { useEffect, useState } from "react";
 import UnblureCard from "./UnblureCard";
 import axios from "axios";
+import { useSession } from "@clerk/clerk-react";
 
 const Unblure = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { session } = useSession();
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/companies-by-ids");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+      if (session) {
+        try {
+          const token = await session.getToken();
+          const response = await axios.get(
+            "http://localhost:3000/companies-by-ids",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          setData(response.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
         }
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [session]);
 
   const handleVerify = async (id) => {
     try {
@@ -147,8 +156,12 @@ const Unblure = () => {
     );
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (data.length === 0 && error) {
+    return (
+      <div className="container mx-auto p-4 text-center mt-20">
+        <p>It seems you haven't unlocked anything till now.</p>
+      </div>
+    );
   }
 
   return (
