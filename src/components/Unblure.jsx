@@ -60,7 +60,12 @@
 import React, { useEffect, useState } from "react";
 import UnblureCard from "./UnblureCard";
 import axios from "axios";
+
+import { Link } from "react-router-dom";
 import { useSession } from "@clerk/clerk-react";
+
+const backgroundImageUrl =
+  "https://images.unsplash.com/photo-1627618998627-70a92a874cc2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const Unblure = () => {
   const [data, setData] = useState([]);
@@ -158,8 +163,27 @@ const Unblure = () => {
 
   if (data.length === 0 && error) {
     return (
-      <div className="container mx-auto p-4 text-center mt-20">
-        <p>It seems you haven't unlocked anything till now.</p>
+      <div
+        className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+      >
+        <div className="bg-white bg-opacity-75 shadow-lg rounded-lg p-10 text-center transform transition-transform hover:scale-105 duration-300 ease-in-out border border-gray-200 max-w-lg mx-4">
+          <h2 className="text-4xl font-bold text-gray-800 mb-4">
+            No Unlocks Yet!
+          </h2>
+          <p className="text-gray-600 mb-4">
+            It seems you haven't unlocked anything till now.
+          </p>
+          <p className="text-gray-500 mb-6">
+            Explore and unlock amazing features to see them here.
+          </p>
+          <Link
+            to="/"
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Discover Emails
+          </Link>
+        </div>
       </div>
     );
   }
