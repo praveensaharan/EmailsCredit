@@ -97,7 +97,6 @@
 
 // export default Nav;
 
-import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   SignedIn,
@@ -113,6 +112,11 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSession } from "@clerk/clerk-react";
+import { Spin } from "antd";
+import { EuroCircleTwoTone } from "@ant-design/icons";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -134,6 +138,37 @@ const Nav = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
+  const [credits, setCredits] = useState(null);
+  const [error, setError] = useState(null);
+  const { session } = useSession();
+
+  useEffect(() => {
+    const fetchCredits = async () => {
+      if (session) {
+        try {
+          const token = await session.getToken();
+          const response = await axios.get("http://localhost:3000/credits", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.status === 200) {
+            setCredits(response.data.credits);
+          } else {
+            throw new Error("Failed to fetch credits");
+          }
+        } catch (error) {
+          console.error("Error fetching credits:", error);
+          setError(error.message);
+        } finally {
+        }
+      } else {
+      }
+    };
+
+    fetchCredits();
+  }, [session]);
 
   return (
     <div className="app">
@@ -141,10 +176,6 @@ const Nav = () => {
         <div className="container mx-auto px-8">
           <div className="flex items-center justify-between">
             <div className="flex shrink-0">
-              {/* <Link aria-current="page" className="flex items-center" to="/">
-                <img className="h-10" src={Logo} alt="Website Logo" />
-                <p className="sr-only">Website Title</p>
-              </Link> */}
               <Link
                 to="/"
                 className="flex items-center gap-2 font-bold text-customBlue"
@@ -197,6 +228,23 @@ const Nav = () => {
               </SignedOut>
               <SignedIn>
                 <UserButton className="text-black bg-orange hover:bg-black rounded-full px-4 py-2 transition duration-300 ease-in-out" />
+                <span className="ml-4 text-sm font-semibold">
+                  {credits === null ? (
+                    <>
+                      <Spin />
+                    </>
+                  ) : error ? (
+                    `Error: ${error}`
+                  ) : (
+                    <span className="flex items-center">
+                      <EuroCircleTwoTone
+                        twoToneColor="#E9AD03"
+                        className="text-xl text-black mr-2"
+                      />
+                      {credits}
+                    </span>
+                  )}
+                </span>
               </SignedIn>
               <button
                 className="md:hidden p-2"

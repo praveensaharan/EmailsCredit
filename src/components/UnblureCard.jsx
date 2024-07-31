@@ -35,7 +35,7 @@ const UnblureCard = ({
   const minutesRemaining = diffInMinutes % 60;
 
   let timeAgo = "";
-  if (diffInDays > 1) {
+  if (diffInDays >= 1) {
     timeAgo = `${diffInDays} days`;
     if (hoursRemaining > 0) {
       timeAgo += ` ${hoursRemaining} hours`;
