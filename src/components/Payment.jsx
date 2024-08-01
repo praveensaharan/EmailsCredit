@@ -57,7 +57,7 @@ import axios from "axios";
 
 const convertToIST = (utcDateString) => {
   const date = new Date(utcDateString);
-  const indiaOffset = 6.5 * 60 * 60 * 1000; // 5 hours 30 minutes in milliseconds
+  const indiaOffset = 5.5 * 60 * 60 * 1000; // 5 hours 30 minutes in milliseconds
   return new Date(date.getTime() + indiaOffset);
 };
 
