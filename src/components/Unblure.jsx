@@ -99,27 +99,85 @@ const Unblure = () => {
     fetchData();
   }, [session]);
 
-  const handleVerify = async (id) => {
-    try {
-      const response = await axios.post("http://localhost:3000/verify", {
-        id,
-      });
-      console.log(response.data);
-      setData((prevData) =>
-        prevData
-          .map((company) =>
-            company.id === id
-              ? response.data
-                ? { ...company, ...response.data }
-                : null
-              : company
-          )
-          .filter((company) => company !== null)
-      );
-    } catch (error) {
-      console.error("Error verifying emails:", error);
+  const handleVerify = async (id, emailCount) => {
+    if (session) {
+      try {
+        const token = await session.getToken();
+
+        // Fetch user balance
+        const balanceResponse = await axios.get(
+          "http://localhost:3000/credits",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const balance = balanceResponse.data.credits;
+
+        if (balance >= emailCount) {
+          const response = await axios.post(
+            "http://localhost:3000/verify",
+            { id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          console.log(response.data);
+          setData((prevData) =>
+            prevData
+              .map((company) =>
+                company.id === id
+                  ? response.data
+                    ? { ...company, ...response.data }
+                    : null
+                  : company
+              )
+              .filter((company) => company !== null)
+          );
+        } else {
+          alert("Insufficient balance to verify emails.");
+        }
+      } catch (err) {
+        setError(err.message);
+      }
     }
   };
+
+  // const handleVerify = async (id,) => {
+  //   if (session) {
+  //     try {
+  //       const token = await session.getToken();
+  //       const response = await axios.post(
+  //         "http://localhost:3000/verify",
+  //         { id },
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       console.log(response.data);
+  //       setData((prevData) =>
+  //         prevData
+  //           .map((company) =>
+  //             company.id === id
+  //               ? response.data
+  //                 ? { ...company, ...response.data }
+  //                 : null
+  //               : company
+  //           )
+  //           .filter((company) => company !== null)
+  //       );
+  //     } catch (error) {
+  //       console.error("Error verifying emails:", error);
+  //     }
+  //   }
+  // };
 
   if (loading) {
     return (

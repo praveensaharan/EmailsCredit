@@ -54,7 +54,7 @@ const UnblureCard = ({
   const handleVerify = async () => {
     setLoading(true);
     if (onVerify) {
-      await onVerify(id);
+      await onVerify(id, emails.length);
     }
     setLoading(false);
   };
