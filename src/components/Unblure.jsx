@@ -1,68 +1,10 @@
-// import React from "react";
-// import UnblureCard from "./UnblureCard";
-
-// const data = [
-//   {
-//     id: 1,
-//     companyName: "Company A",
-//     companyDomain: "companya.com",
-//     emails: ["contact@companya.com"],
-//     creationDate: "2023-01-15T00:00:00Z",
-//     lastVerificationDate: "2023-06-15T00:00:00Z",
-//   },
-//   {
-//     id: 2,
-//     companyName: "Company B",
-//     companyDomain: "companyb.com",
-//     emails: ["info@companyb.com", "inf3o@companyb.com", "info3@companyb.com"],
-//     creationDate: "2022-11-20T00:00:00Z",
-//     lastVerificationDate: "2023-05-31T00:00:00Z",
-//   },
-//   {
-//     id: 3,
-//     companyName: "Company C",
-//     companyDomain: "companyc.com",
-//     emails: ["support@companyc.com"],
-//     creationDate: "2023-03-10T00:00:00Z",
-//     lastVerificationDate: "2023-07-05T00:00:00Z",
-//   },
-//   {
-//     id: 4,
-//     companyName: "Company D",
-//     companyDomain: "companyd.com",
-//     emails: ["hello@companyd.com"],
-//     creationDate: "2022-08-05T00:00:00Z",
-//     lastVerificationDate: "2023-03-10T00:00:00Z",
-//   },
-// ];
-
-// const Unblure = () => {
-//   return (
-//     <div className="container mx-auto p-4">
-//       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
-//         {data.map((item) => (
-//           <UnblureCard
-//             key={item.id}
-//             companyName={item.companyName}
-//             companyDomain={item.companyDomain}
-//             emails={item.emails}
-//             creationDate={item.creationDate}
-//             lastVerificationDate={item.lastVerificationDate}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Unblure;
-
 import React, { useEffect, useState } from "react";
 import UnblureCard from "./UnblureCard";
 import axios from "axios";
 
 import { Link } from "react-router-dom";
 import { useSession } from "@clerk/clerk-react";
+import { useCredits } from "../ContextApi/CreditsContext";
 
 const backgroundImageUrl =
   "https://images.unsplash.com/photo-1627618998627-70a92a874cc2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -72,6 +14,7 @@ const Unblure = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { session } = useSession();
+  const { credits, setCredits } = useCredits();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,24 +42,30 @@ const Unblure = () => {
     fetchData();
   }, [session]);
 
+  const fetchCredits = async () => {
+    if (session) {
+      try {
+        const token = await session.getToken();
+        const response = await axios.get("http://localhost:3000/credits", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.status === 200) {
+          setCredits(response.data.credits);
+        } else {
+          throw new Error("Failed to fetch credits");
+        }
+      } catch (error) {
+        console.error("Error fetching credits:", error);
+      }
+    }
+  };
+
   const handleVerify = async (id, emailCount) => {
     if (session) {
       try {
         const token = await session.getToken();
 
-        // Fetch user balance
-        const balanceResponse = await axios.get(
-          "http://localhost:3000/credits",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const balance = balanceResponse.data.credits;
-
-        if (balance >= emailCount) {
+        if (credits >= emailCount) {
           const response = await axios.post(
             "http://localhost:3000/verify",
             { id },
@@ -128,6 +77,7 @@ const Unblure = () => {
           );
 
           console.log(response.data);
+          await fetchCredits();
           setData((prevData) =>
             prevData
               .map((company) =>
@@ -147,37 +97,6 @@ const Unblure = () => {
       }
     }
   };
-
-  // const handleVerify = async (id,) => {
-  //   if (session) {
-  //     try {
-  //       const token = await session.getToken();
-  //       const response = await axios.post(
-  //         "http://localhost:3000/verify",
-  //         { id },
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //       console.log(response.data);
-  //       setData((prevData) =>
-  //         prevData
-  //           .map((company) =>
-  //             company.id === id
-  //               ? response.data
-  //                 ? { ...company, ...response.data }
-  //                 : null
-  //               : company
-  //           )
-  //           .filter((company) => company !== null)
-  //       );
-  //     } catch (error) {
-  //       console.error("Error verifying emails:", error);
-  //     }
-  //   }
-  // };
 
   if (loading) {
     return (

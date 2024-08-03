@@ -12,6 +12,7 @@ import moment from "moment";
 import "./Emails.css";
 import { useSession } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import { useCredits } from "../ContextApi/CreditsContext";
 
 const { confirm } = Modal;
 
@@ -23,23 +24,18 @@ const Emails = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
-  const [credits, setCredits] = useState(null);
   const { session } = useSession();
   const navigate = useNavigate();
+  const { credits, setCredits, error } = useCredits();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch data and credits concurrently
-        await Promise.all([
-          fetchTableContents(),
-          fetchCredits(),
-          fetchUnlockEmails(),
-        ]);
+        await Promise.all([fetchTableContents(), fetchUnlockEmails()]);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setLoading(false); // Set loading to false once all requests are complete
+        setLoading(false);
       }
     };
 
@@ -54,24 +50,6 @@ const Emails = () => {
       }
     };
 
-    const fetchCredits = async () => {
-      if (session) {
-        try {
-          const token = await session.getToken();
-          const response = await axios.get("http://localhost:3000/credits", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          if (response.status === 200) {
-            setCredits(response.data.credits);
-          } else {
-            throw new Error("Failed to fetch credits");
-          }
-        } catch (error) {
-          console.error("Error fetching credits:", error);
-        }
-      }
-    };
-
     const fetchUnlockEmails = async () => {
       if (session) {
         try {
@@ -79,9 +57,7 @@ const Emails = () => {
           const response = await axios.get(
             "http://localhost:3000/companies-by-ids",
             {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
+              headers: { Authorization: `Bearer ${token}` },
             }
           );
           setUnlockdata(response.data);
@@ -93,6 +69,24 @@ const Emails = () => {
 
     fetchData();
   }, [session]);
+
+  const fetchCredits = async () => {
+    if (session) {
+      try {
+        const token = await session.getToken();
+        const response = await axios.get("http://localhost:3000/credits", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.status === 200) {
+          setCredits(response.data.credits);
+        } else {
+          throw new Error("Failed to fetch credits");
+        }
+      } catch (error) {
+        console.error("Error fetching credits:", error);
+      }
+    }
+  };
 
   const handleSearch = (event) => {
     const query = event.target.value;
@@ -161,6 +155,7 @@ const Emails = () => {
   const handleMove = async (id, companyName) => {
     if (session) {
       try {
+        setLoading(true); // Set loading to true at the start of the request
         const token = await session.getToken();
         const response = await axios.post(
           "http://localhost:3000/AddToUser",
@@ -170,6 +165,7 @@ const Emails = () => {
           }
         );
         if (response.status === 200) {
+          await fetchCredits(); // Fetch credits again after unlocking
           navigate("/unblure");
         } else {
           throw new Error("Failed to unlock emails");
@@ -180,6 +176,8 @@ const Emails = () => {
           title: "Error",
           content: "Failed to unlock emails. Please try again.",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
       Modal.error({
