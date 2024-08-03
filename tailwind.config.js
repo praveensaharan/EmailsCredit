@@ -10,6 +10,9 @@ export default {
         customBlue: "#4056a1",
         customLightBlue: "#c5cbe3",
       },
+      maxHeight: {
+        "200vh": "200vh", // Two screen heights
+      },
     },
   },
   plugins: [],

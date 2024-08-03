@@ -2,62 +2,11 @@ import React, { useEffect, useState } from "react";
 import { CreditCardOutlined, HistoryOutlined } from "@ant-design/icons";
 import { useSession } from "@clerk/clerk-react";
 import axios from "axios";
-// const transactions = [
-//   {
-//     id: 1,
-//     date: "2024-07-01",
-//     time: "14:30",
-//     amount: "-1",
-//     description: "Nected emails",
-//     status: "Completed",
-//     transactionId: "TXN12345",
-//     notes: "Monthly subscription fee",
-//   },
-//   {
-//     id: 2,
-//     date: "2024-07-10",
-//     time: "09:15",
-//     amount: "-1",
-//     description: "Clear emails",
-//     status: "Completed",
-//     transactionId: "TXN12346",
-//     notes: "Service charge for clearing emails",
-//   },
-//   {
-//     id: 5,
-//     date: "2024-07-10",
-//     time: "16:45",
-//     amount: "-3",
-//     description: "Clear:Email Verify",
-//     status: "Pending",
-//     transactionId: "TXN12347",
-//     notes: "Email verification service fee",
-//   },
-//   {
-//     id: 3,
-//     date: "2024-07-20",
-//     time: "11:00",
-//     amount: "-1",
-//     description: "FatakPay emails",
-//     status: "Completed",
-//     transactionId: "TXN12348",
-//     notes: "Payment for FatakPay service",
-//   },
-//   {
-//     id: 4,
-//     date: "2024-06-30",
-//     time: "20:00",
-//     amount: "+10",
-//     description: "Signup Bonus",
-//     status: "Completed",
-//     transactionId: "TXN12349",
-//     notes: "Bonus for signing up",
-//   },
-// ];
+import { useApi } from "../ContextApi/CreditsContext";
 
 const convertToIST = (utcDateString) => {
   const date = new Date(utcDateString);
-  const indiaOffset = 5.5 * 60 * 60 * 1000; // 5 hours 30 minutes in milliseconds
+  const indiaOffset = 0; // 5 hours 30 minutes in milliseconds
   return new Date(date.getTime() + indiaOffset);
 };
 
@@ -78,47 +27,68 @@ const formatDateAndTime = (date) => {
 };
 
 const Payment = () => {
+  // const { session } = useSession();
+  // const [transactions, setTransactions] = useState([]);
+
   const { session } = useSession();
-  const [transactions, setTransactions] = useState([]);
-  const [credits, setCredits] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const { credits, transactions, loading } = useApi();
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (session) {
-        try {
-          const token = await session.getToken();
-          const [transactionsResponse, creditsResponse] = await Promise.all([
-            axios.get("http://localhost:3000/transactions", {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }),
-            axios.get("http://localhost:3000/credits", {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }),
-          ]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
 
-          setTransactions(transactionsResponse.data);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (session) {
+  //       try {
+  //         setLoading(true);
+  //         await Promise.all([fetchCredits(), fetchTransactionsEmails()]);
+  //       } catch (err) {
+  //         setError(err.message);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     }
+  //   };
 
-          if (creditsResponse.status === 200) {
-            setCredits(creditsResponse.data.credits);
-          } else {
-            throw new Error("Failed to fetch credits");
-          }
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
+  //   fetchData();
+  // }, [session]);
 
-    fetchData();
-  }, [session]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (session) {
+  //       try {
+  //         const token = await session.getToken();
+  //         const [transactionsResponse, creditsResponse] = await Promise.all([
+  //           axios.get("http://localhost:3000/transactions", {
+  //             headers: {
+  //               Authorization: `Bearer ${token}`,
+  //             },
+  //           }),
+  //           axios.get("http://localhost:3000/credits", {
+  //             headers: {
+  //               Authorization: `Bearer ${token}`,
+  //             },
+  //           }),
+  //         ]);
+
+  //         setTransactions(transactionsResponse.data);
+
+  //         if (creditsResponse.status === 200) {
+  //           setCredits(creditsResponse.data.credits);
+  //         } else {
+  //           throw new Error("Failed to fetch credits");
+  //         }
+  //       } catch (err) {
+  //         setError(err.message);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [session]);
 
   if (loading) {
     return (

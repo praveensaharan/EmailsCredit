@@ -337,7 +337,7 @@ import {
 import React, { useState } from "react";
 import { Spin } from "antd";
 import { EuroCircleTwoTone } from "@ant-design/icons";
-import { useCredits } from "../ContextApi/CreditsContext";
+import { useApi } from "../ContextApi/CreditsContext";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -359,7 +359,7 @@ const Nav = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
-  const { credits, error } = useCredits();
+  const { credits, error } = useApi();
 
   return (
     <div className="app">
