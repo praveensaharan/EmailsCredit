@@ -1,2 +1,3 @@
-make price part dynamic
-then on click unlock make price deduction and add to transaction.
+make table compaitable for small devices
+make a cupon code based input system
+api for insights for all the things
