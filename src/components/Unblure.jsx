@@ -268,7 +268,7 @@ const Unblure = () => {
     );
   }
 
-  if (data.length === 0 && error) {
+  if (unlockdata.length === 0 || error) {
     return (
       <div
         className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"

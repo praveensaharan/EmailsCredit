@@ -4,6 +4,7 @@ import { useSession } from "@clerk/clerk-react";
 
 const CreditsContext = createContext();
 const BaseUrl = "https://pricemailbackend.vercel.app";
+// const BaseUrl = "http://localhost:3000";
 
 export const ApiProvider = ({ children }) => {
   const [data, setData] = useState([]);
@@ -62,8 +63,10 @@ export const ApiProvider = ({ children }) => {
         const response = await axios.get(`${BaseUrl}/companies-by-ids`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUnlockdata(response.data);
-        // console.log("Unlock data:", response.data);
+
+        if (response.status === 200) {
+          setUnlockdata(response.data);
+        }
       } catch (err) {
         console.error("Error fetching unlock data:", err.message);
       }
