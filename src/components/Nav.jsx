@@ -371,7 +371,7 @@ const Nav = () => {
                 to="/"
                 className="flex items-center gap-2 font-bold text-customBlue"
               >
-                <FaRegPaperPlane className="h-6 w-6 text-customGold" />
+                <FaRegPaperPlane className="h-6 w-6 text-customGold animate-bounce" />
                 <span>Paper.io</span>
               </Link>
             </div>

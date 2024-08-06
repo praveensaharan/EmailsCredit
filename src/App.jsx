@@ -1,28 +1,3 @@
-// import React from "react";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
-// import Nav from "./components/Nav";
-// import Emails from "./components/Emails";
-// import Unblure from "./components/Unblure";
-// import Payment from "./components/Payment";
-
-// function App() {
-//   return (
-//     <Router>
-//       <div className="App">
-//         <Nav />
-//         <Routes>
-//           <Route path="/" element={<Emails />} />
-//           <Route path="/unblure" element={<Unblure />} />
-//           <Route path="/payment" element={<Payment />} />
-//         </Routes>
-//       </div>
-//     </Router>
-//   );
-// }
-
-// export default App;
-
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
@@ -32,6 +7,7 @@ import Payment from "./components/Payment";
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import Protected from "./components/Protected";
 import "./App.css";
+import CouponCard from "./components/CouponCard";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -105,6 +81,19 @@ const App = () => {
                   </SignedOut>
                   <SignedIn>
                     <Payment />
+                  </SignedIn>
+                </>
+              }
+            />
+            <Route
+              path="/credit"
+              element={
+                <>
+                  <SignedOut>
+                    <Protected />
+                  </SignedOut>
+                  <SignedIn>
+                    <CouponCard />
                   </SignedIn>
                 </>
               }

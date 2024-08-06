@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CreditCardOutlined, HistoryOutlined } from "@ant-design/icons";
 import { useSession } from "@clerk/clerk-react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useApi } from "../ContextApi/CreditsContext";
 
 const convertToIST = (utcDateString) => {
@@ -163,9 +164,12 @@ const Payment = () => {
               </p>
             </div>
           </div>
-          <button className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-300">
+          <Link
+            to="/credit"
+            className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-300"
+          >
             Buy More Credits
-          </button>
+          </Link>
         </div>
 
         <div className="mb-8">
