@@ -345,6 +345,17 @@ const Emails = () => {
   } = useApi();
   const navigate = useNavigate();
 
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const fetchSearchResults1 = async () => {
     try {
       const response = await fetchSearchResults(searchQuery);
@@ -442,24 +453,23 @@ const Emails = () => {
       render: (text, record, index) => index + 1,
       className: "text-center px-2 sm:px-4 py-2",
       fixed: "left",
-      width: 70,
+      width: isSmallScreen ? 50 : 80,
     },
     {
       title: "Company Name",
       dataIndex: "companyName",
       key: "companyName",
-      className: "px-2 sm:px-4 py-2 text-center",
+      className: "px-2 sm:px-4 py-2 text-center z-11",
       sorter: (a, b) => a.companyName.localeCompare(b.companyName),
       fixed: "left",
-      width: 180,
+      width: isSmallScreen ? 100 : "",
     },
     {
       title: "Company Domain",
       dataIndex: "companyDomain",
       key: "companyDomain",
       className: "px-2 sm:px-4 py-2 text-center",
-      // sorter: (a, b) => a.companyDomain.localeCompare(b.companyDomain),
-      width: 150,
+      width: isSmallScreen ? 90 : 180,
     },
     {
       title: "Emails",
@@ -469,18 +479,21 @@ const Emails = () => {
           <Button type="default" onClick={() => showMoveConfirm(record)}>
             <LockTwoTone
               twoToneColor="#f13c20"
-              className="absolute z-10 text-xl"
+              className="absolute z-3 text-xl"
             />
             <span
               className="blur-sm no-select no-copy"
               style={{ pointerEvents: "none" }}
             >
-              unblur@actual.com, unlockactual@mail.com
+              {isSmallScreen
+                ? "unblur@actual.com"
+                : "unblur@actual.com, unlockactual@mail.com"}
             </span>
           </Button>
         </div>
       ),
       className: "text-center px-2 sm:px-4 py-2",
+      width: isSmallScreen ? 160 : "",
     },
     {
       title: "Days Last Verification",
@@ -493,7 +506,7 @@ const Emails = () => {
           {calculateDaysSinceLastVerification(record.lastVerificationDate)}
         </Tag>
       ),
-      width: 180,
+      width: isSmallScreen ? 100 : 140,
     },
     {
       title: "Creation Date",
@@ -506,6 +519,7 @@ const Emails = () => {
           {moment(record.creationDate).format("YYYY-MM-DD")}
         </Tag>
       ),
+      width: isSmallScreen ? "" : 190,
     },
   ];
 
@@ -527,29 +541,31 @@ const Emails = () => {
     <div className="container mx-auto p-2 sm:p-4 bg-customLightBlue rounded-xl shadow-lg">
       <Input
         placeholder="Search...(2s delay)"
-        className="mt-20 w-52 mb-2 p-2 border-2 focus:border-customLightGold rounded-xl border-customRed transition duration-200"
+        className="mt-4 sm:mt-20 w-full sm:w-52 mb-2 p-2 border-2 focus:border-customLightGold rounded-xl border-customRed transition duration-200"
         onChange={handleSearchChange}
       />
-      <p className="text-2xl font-semibold text-customGold mb-4 my-4">
+      <p className="text-xl sm:text-2xl font-semibold text-customGold mb-4 my-4">
         Top 200 Data
       </p>
       {(loading || searchLoading) && <SyncOutlined spin />}
 
-      <Table
-        rowClassName={() => "rowClassName1"}
-        columns={columns}
-        dataSource={dataSource}
-        loading={loading || searchLoading}
-        rowKey="key"
-        className="bg-transparent shadow-lg mb-20 mt-5 rounded-2xl"
-        pagination={false}
-        bordered
-        scroll={{
-          x: "calc(400px + 70%)",
-          y: 450,
-        }}
-        sticky
-      />
+      <div className="overflow-x-auto">
+        <Table
+          rowClassName={() => "rowClassName1"}
+          columns={columns}
+          dataSource={dataSource}
+          loading={loading || searchLoading}
+          rowKey="key"
+          className="bg-transparent shadow-lg mb-20 mt-5 rounded-2xl"
+          pagination={false}
+          bordered
+          scroll={{
+            x: "calc(400px + 70%)",
+            y: 450,
+          }}
+          sticky
+        />
+      </div>
     </div>
   );
 };
