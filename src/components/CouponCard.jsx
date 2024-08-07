@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { FaRegPaperPlane } from "react-icons/fa";
+import { FaRegPaperPlane, FaCopy, FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Otherpayment from "./PaymentOptions";
 import { useApi } from "../ContextApi/CreditsContext";
-import { Spin } from "antd";
+import { Spin, Alert, message as antdMessage } from "antd";
 
 const CouponCard = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [inputCode, setInputCode] = useState("");
-  const [isRedeemed, setIsRedeemed] = useState(false);
-  const [message, setMessage] = useState("");
+
   const { ReedemCoupon, loading } = useApi();
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText("GETFREE5");
     setIsCopied(true);
+    antdMessage.success("Coupon code copied to clipboard!");
   };
 
   const handleRedeem = async () => {
     try {
       const result = await ReedemCoupon(inputCode);
       if (result) {
-        setIsRedeemed(true);
-        setMessage(result); // Use the message returned from the ReedemCoupon function
+        antdMessage.success(result); // Use the message returned from the ReedemCoupon function
       } else {
-        setIsRedeemed(false);
-        setMessage("Invalid coupon code. Please try again.");
+        antdMessage.error("Invalid coupon code. Please try again.");
       }
     } catch (error) {
       console.error("Error redeeming coupon:", error.message);
-      setIsRedeemed(false);
-      setMessage("An error occurred. Please try again.");
+
+      antdMessage.error("An error occurred. Please try again.");
     }
   };
 
@@ -45,7 +42,7 @@ const CouponCard = () => {
 
   return (
     <div className="container mx-auto mt-14 p-4">
-      <div className="flex flex-wrap justify-center gap-10">
+      <div className="flex flex-wrap justify-center gap-5">
         <div className="bg-gradient-to-br from-customBlue to-customLightBlue text-white text-center py-10 px-6 sm:px-20 rounded-lg shadow-xl relative flex-grow max-w-md w-full">
           <div className="flex shrink-0 bg-white rounded-3xl justify-center py-4 shadow-md mb-4">
             <Link
@@ -71,11 +68,11 @@ const CouponCard = () => {
             <span
               id="cpnBtn"
               className={`border border-white bg-white text-customBlue px-4 py-2 rounded-r cursor-pointer transition transform hover:scale-105 ${
-                isCopied ? "bg-customGold text-white" : ""
+                isCopied ? "text-customRed" : ""
               }`}
               onClick={handleCopyCode}
             >
-              {isCopied ? "Copied!" : "Copy Code"}
+              {isCopied ? <FaCheck /> : <FaCopy className="text-cyan-800" />}{" "}
             </span>
           </div>
           <p className="text-sm">Valid Till: 02 Dec, 2024</p>
@@ -86,9 +83,9 @@ const CouponCard = () => {
 
         <div className="bg-gradient-to-br from-customGold to-customLightGold text-white text-center py-10 px-6 sm:px-20 rounded-lg shadow-xl relative flex-grow max-w-md w-full">
           <h3 className="text-2xl font-semibold my-4">
-            Enter Your Coupon Code
+            Enter Your
             <br />
-            Here
+            Coupon Code
           </h3>
           <div className="flex items-center justify-center space-x-2 mb-6">
             <input
@@ -102,26 +99,15 @@ const CouponCard = () => {
             <button
               onClick={handleRedeem}
               className="px-4 py-2 bg-customBlue text-white rounded-r border-2 border-customBlue cursor-pointer transition transform hover:scale-105"
+              disabled={loading}
             >
-              {loading ? <Spin /> : <>Redeem</>}{" "}
+              {loading ? <Spin /> : <>Redeem</>}
             </button>
           </div>
-          {message && (
-            <p
-              className={`text-lg ${
-                isRedeemed ? "text-customBlue" : "text-customRed"
-              }`}
-            >
-              {message}
-            </p>
-          )}
 
           <div className="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6 shadow-lg"></div>
           <div className="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6 shadow-lg"></div>
         </div>
-      </div>
-      <div className="mt-10">
-        <Otherpayment />
       </div>
     </div>
   );

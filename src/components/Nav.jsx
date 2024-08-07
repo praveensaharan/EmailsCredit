@@ -425,13 +425,13 @@ const Nav = () => {
                   ) : error ? (
                     `Error: ${error}`
                   ) : (
-                    <span className="flex items-center">
+                    <Link to="/payment" className="flex items-center">
                       <EuroCircleTwoTone
                         twoToneColor="#E9AD03"
                         className="text-xl text-black mr-2"
                       />
                       {credits}
-                    </span>
+                    </Link>
                   )}
                 </span>
               </SignedIn>
