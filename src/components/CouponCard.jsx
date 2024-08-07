@@ -2,25 +2,35 @@ import React, { useState, useEffect } from "react";
 import { FaRegPaperPlane } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Otherpayment from "./PaymentOptions";
+import { useApi } from "../ContextApi/CreditsContext";
+import { Spin } from "antd";
 
 const CouponCard = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [inputCode, setInputCode] = useState("");
   const [isRedeemed, setIsRedeemed] = useState(false);
   const [message, setMessage] = useState("");
+  const { ReedemCoupon, loading } = useApi();
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText("GETFREE5");
     setIsCopied(true);
   };
 
-  const handleRedeem = () => {
-    if (inputCode === "GETFREE5") {
-      setIsRedeemed(true);
-      setMessage("Coupon redeemed successfully!");
-    } else {
+  const handleRedeem = async () => {
+    try {
+      const result = await ReedemCoupon(inputCode);
+      if (result) {
+        setIsRedeemed(true);
+        setMessage(result); // Use the message returned from the ReedemCoupon function
+      } else {
+        setIsRedeemed(false);
+        setMessage("Invalid coupon code. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error redeeming coupon:", error.message);
       setIsRedeemed(false);
-      setMessage("Invalid coupon code. Please try again.");
+      setMessage("An error occurred. Please try again.");
     }
   };
 
@@ -36,7 +46,7 @@ const CouponCard = () => {
   return (
     <div className="container mx-auto mt-14 p-4">
       <div className="flex flex-wrap justify-center gap-10">
-        <div className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-10 px-6 sm:px-20 rounded-lg shadow-xl relative flex-grow max-w-md w-full">
+        <div className="bg-gradient-to-br from-customBlue to-customLightBlue text-white text-center py-10 px-6 sm:px-20 rounded-lg shadow-xl relative flex-grow max-w-md w-full">
           <div className="flex shrink-0 bg-white rounded-3xl justify-center py-4 shadow-md mb-4">
             <Link
               to="/"
@@ -60,8 +70,8 @@ const CouponCard = () => {
             </span>
             <span
               id="cpnBtn"
-              className={`border border-white bg-white text-purple-600 px-4 py-2 rounded-r cursor-pointer transition transform hover:scale-105 ${
-                isCopied ? "bg-green-500 text-white" : ""
+              className={`border border-white bg-white text-customBlue px-4 py-2 rounded-r cursor-pointer transition transform hover:scale-105 ${
+                isCopied ? "bg-customGold text-white" : ""
               }`}
               onClick={handleCopyCode}
             >
@@ -74,7 +84,7 @@ const CouponCard = () => {
           <div className="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6 shadow-lg"></div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-400 to-blue-500 text-white text-center py-10 px-6 sm:px-20 rounded-lg shadow-xl relative flex-grow max-w-md w-full">
+        <div className="bg-gradient-to-br from-customGold to-customLightGold text-white text-center py-10 px-6 sm:px-20 rounded-lg shadow-xl relative flex-grow max-w-md w-full">
           <h3 className="text-2xl font-semibold my-4">
             Enter Your Coupon Code
             <br />
@@ -85,20 +95,21 @@ const CouponCard = () => {
               type="text"
               value={inputCode}
               onChange={(e) => setInputCode(e.target.value)}
-              className="px-4 py-2 rounded-l bg-white text-purple-600 border-2 border-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+              className="px-4 py-2 rounded-l bg-white text-customBlue border-2 border-customBlue focus:outline-none focus:ring-2 focus:ring-customLightBlue transition"
               placeholder="Enter coupon code"
+              disabled={loading}
             />
             <button
               onClick={handleRedeem}
-              className="px-4 py-2 bg-purple-600 text-white rounded-r border-2 border-purple-600 cursor-pointer transition transform hover:scale-105"
+              className="px-4 py-2 bg-customBlue text-white rounded-r border-2 border-customBlue cursor-pointer transition transform hover:scale-105"
             >
-              Redeem
+              {loading ? <Spin /> : <>Redeem</>}{" "}
             </button>
           </div>
           {message && (
             <p
               className={`text-lg ${
-                isRedeemed ? "text-green-500" : "text-red-500"
+                isRedeemed ? "text-customBlue" : "text-customRed"
               }`}
             >
               {message}

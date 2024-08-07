@@ -160,6 +160,33 @@ export const ApiProvider = ({ children }) => {
     }
   };
 
+  const ReedemCoupon = async (couponCode) => {
+    try {
+      setLoading(true);
+      const token = await session.getToken();
+      const response = await axios.post(
+        `${BaseUrl}/redeem-coupon`,
+        { couponCode },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (response.status === 200) {
+        await Promise.all([fetchCredits(), fetchTransactionsEmails()]);
+        return response.data.message;
+      } else {
+        console.error("Failed to redeem coupon:", response.statusText);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error redeeming coupon:", error.message);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <CreditsContext.Provider
       value={{
@@ -175,6 +202,7 @@ export const ApiProvider = ({ children }) => {
         fetchCredits,
         fetchTransactionsEmails,
         fetchUnlockEmails,
+        ReedemCoupon,
       }}
     >
       {children}

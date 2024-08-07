@@ -1,3 +1,5 @@
-make table compaitable for small devices
-make a cupon code based input system
+
 api for insights for all the things
+add companies compensation
+
+
