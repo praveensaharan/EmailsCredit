@@ -30,12 +30,13 @@ const formatDateAndTime = (date) => {
 
 const Payment = () => {
   const { credits, transactions, loading } = useApi();
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center py-12 px-4">
-        <div className="w-full sm:w-2/3 bg-white shadow-lg rounded-lg mt-14">
+      <div className="min-h-screen flex flex-col-reverse sm:flex-row bg-gray-100 py-12 px-4 space-x-4">
+        <div className="w-full sm:w-2/3 bg-white shadow-lg rounded-lg mt-10">
           <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8 mt-4">
             <div className="mb-8 p-6 bg-indigo-100 border border-indigo-200 rounded-lg flex flex-col sm:flex-row items-center justify-between">
               <div className="flex items-center mb-4 sm:mb-0">
@@ -75,7 +76,14 @@ const Payment = () => {
             </div>
           </div>
         </div>
-        <div className="w-full sm:w-1/3 mt-8 sm:mt-0">
+        <div className="w-full sm:w-1/3 mt-10">
+          <div className="w-full max-w-sm bg-white shadow-lg rounded-lg p-8 mt-4">
+            <div className="w-full h-6 bg-gray-300 rounded wave-bg mb-4"></div>
+            <div className="w-full h-4 bg-gray-300 rounded wave-bg mb-4"></div>
+            <div className="w-full h-4 bg-gray-300 rounded wave-bg mb-4"></div>
+            <div className="w-full h-4 bg-gray-300 rounded wave-bg mb-4"></div>
+            <div className="w-full h-4 bg-gray-300 rounded wave-bg"></div>
+          </div>
           <div className="w-full max-w-sm bg-white shadow-lg rounded-lg p-8 mt-4">
             <div className="w-full h-6 bg-gray-300 rounded wave-bg mb-4"></div>
             <div className="w-full h-4 bg-gray-300 rounded wave-bg mb-4"></div>

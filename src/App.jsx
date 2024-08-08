@@ -9,6 +9,7 @@ import Protected from "./components/Protected";
 import "./App.css";
 import CouponCard from "./components/CouponCard";
 import Additional from "./components/PaymentOptions";
+import Insights from "./components/Insights";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -56,6 +57,7 @@ const App = () => {
                   </SignedOut>
                   <SignedIn>
                     <Emails />
+                    <Insights />
                   </SignedIn>
                 </>
               }

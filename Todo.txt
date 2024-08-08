@@ -1,5 +1,4 @@
 
 api for insights for all the things
 add companies compensation
-
-
+making a email setup

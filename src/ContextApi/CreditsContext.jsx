@@ -12,6 +12,7 @@ export const ApiProvider = ({ children }) => {
   const [credits, setCredits] = useState(null);
   const [loading, setLoading] = useState(true);
   const [transactions, setTransactions] = useState([]);
+  const [insights, setInsights] = useState([]);
   const { session } = useSession();
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export const ApiProvider = ({ children }) => {
         fetchCredits(),
         fetchTransactionsEmails(),
         fetchUnlockEmails(),
+        fetchInsights(),
       ]).finally(() => setLoading(false));
     }
   }, [session]);
@@ -70,6 +72,27 @@ export const ApiProvider = ({ children }) => {
       } catch (err) {
         console.error("Error fetching unlock data:", err.message);
       }
+    }
+  };
+
+  const fetchInsights = async () => {
+    try {
+      const response = await axios.get(`${BaseUrl}/insights`);
+      if (response.status === 200) {
+        const data = response.data;
+
+        // Ensure daily_verification_counts is an array of objects
+        if (
+          data.company &&
+          Array.isArray(data.company.daily_verification_counts)
+        ) {
+          setInsights(data.company);
+        } else {
+          console.error("Unexpected data format for daily_verification_counts");
+        }
+      }
+    } catch (err) {
+      console.error("Error fetching Insights:", err.message);
     }
   };
 
@@ -203,6 +226,7 @@ export const ApiProvider = ({ children }) => {
         fetchTransactionsEmails,
         fetchUnlockEmails,
         ReedemCoupon,
+        insights,
       }}
     >
       {children}

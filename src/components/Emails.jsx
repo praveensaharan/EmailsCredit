@@ -342,6 +342,7 @@ const Emails = () => {
     loading,
     fetchSearchResults,
     addToEmailsCredits,
+    insights,
   } = useApi();
   const navigate = useNavigate();
 
@@ -538,15 +539,30 @@ const Emails = () => {
   const dataSource = searchQuery ? searchResults : data;
 
   return (
-    <div className="container mx-auto p-2 sm:p-4 bg-customLightBlue rounded-xl shadow-lg">
+    <div className="container mx-auto p-2 sm:p-4 bg-customLightBlue rounded-xl shadow-lg mt-16 sm:mt-0">
       <Input
         placeholder="Search...(2s delay)"
         className="mt-4 sm:mt-20 w-full sm:w-52 mb-2 p-2 border-2 focus:border-customLightGold rounded-xl border-customRed transition duration-200"
         onChange={handleSearchChange}
       />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <p className="text-sm text-gray-500">Total Companies</p>
+          <p className="text-3xl font-semibold text-green-600">
+            {insights.total_companies}
+          </p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <p className="text-sm text-gray-500">Total Emails</p>
+          <p className="text-3xl font-semibold text-blue-600">
+            {insights.total_emails}
+          </p>
+        </div>
+      </div>
       <p className="text-xl sm:text-2xl font-semibold text-customGold mb-4 my-4">
-        Top 200 Data
+        Top 50 Data Based on Verification
       </p>
+
       {(loading || searchLoading) && <SyncOutlined spin />}
 
       <div className="overflow-x-auto">
