@@ -2,3 +2,87 @@
 api for insights for all the things
 add companies compensation
 making a email setup
+
+
+
+
+
+import React, { useRef, useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Divider, Input, Select, Space, Form } from 'antd';
+
+const JobPortalForm = () => {
+  const [items, setItems] = useState(['LinkedIn', 'Indeed', "Company's Career Page"]);
+  const [name, setName] = useState('');
+  const inputRef = useRef(null);
+
+  const onNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const addItem = (e) => {
+    e.preventDefault();
+    if (name) {
+      setItems([...items, name]);
+      setName('');
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
+    }
+  };
+
+  return (
+    <Form
+      name="jobPortalForm"
+      layout="vertical"
+      initialValues={{ jobPortal: undefined }}
+    >
+      <Form.Item
+        name="jobPortal"
+        label="Job Portal/Medium"
+        rules={[
+          { required: true, message: "Please select or add a job portal!" },
+        ]}
+      >
+        <Select
+          style={{
+            width: 300,
+          }}
+          placeholder="Select or add a job portal"
+          dropdownRender={(menu) => (
+            <>
+              {menu}
+              <Divider
+                style={{
+                  margin: '8px 0',
+                }}
+              />
+              <Space
+                style={{
+                  padding: '0 8px 4px',
+                }}
+              >
+                <Input
+                  placeholder="Please enter item"
+                  ref={inputRef}
+                  value={name}
+                  onChange={onNameChange}
+                  onKeyDown={(e) => e.stopPropagation()} // Prevents Select from closing
+                />
+                <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
+                  Add item
+                </Button>
+              </Space>
+            </>
+          )}
+          options={items.map((item) => ({
+            label: item,
+            value: item,
+          }))}
+        />
+      </Form.Item>
+    </Form>
+  );
+};
+
+export default JobPortalForm;
