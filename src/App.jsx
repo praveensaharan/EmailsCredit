@@ -10,6 +10,7 @@ import "./App.css";
 import CouponCard from "./components/CouponCard";
 import Additional from "./components/PaymentOptions";
 import Insights from "./components/Insights";
+import EmailPreview from "./components/EmailPreview";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -98,6 +99,19 @@ const App = () => {
                   <SignedIn>
                     <CouponCard />
                     <Additional />
+                  </SignedIn>
+                </>
+              }
+            />
+            <Route
+              path="/preview"
+              element={
+                <>
+                  <SignedOut>
+                    <Protected />
+                  </SignedOut>
+                  <SignedIn>
+                    <EmailPreview />
                   </SignedIn>
                 </>
               }

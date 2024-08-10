@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import {
   CalendarTwoTone,
   MailTwoTone,
@@ -89,12 +90,14 @@ const UnblureCard = ({
           <dd className="mt-1 text-xs text-gray-500">
             {emails.map((email, index) => (
               <p key={index}>
-                <a
-                  href={`mailto:${email}`}
+                <Link
+                  to={`/preview?email=${encodeURIComponent(
+                    email
+                  )}&companyName=${encodeURIComponent(companyName)}`}
                   className="text-customBlue hover:underline hover:text-customGold"
                 >
                   {email}
-                </a>
+                </Link>
               </p>
             ))}
           </dd>
