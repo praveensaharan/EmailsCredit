@@ -1,4 +1,4 @@
-
-api for insights for all the things
 add companies compensation
-making a email setup
+making a email setup and generate response from ai
+make the home page
+
