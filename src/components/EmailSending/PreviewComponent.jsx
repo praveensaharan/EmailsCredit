@@ -37,9 +37,9 @@ I look forward to hearing from you soon.
 Best Regards,
 ${data.fullName || "[Full Name]"}${
       data.contactInformation ? `\n${data.contactInformation}` : ""
-    }${data.linkedinProfile ? `\nLinkedIn: ${data.linkedinProfile}` : ""}${
-      data.githubProfile ? `\nGithub: ${data.githubProfile}` : ""
-    }${data.resume ? `\nResume: ${data.resume}` : ""}
+    }${data.resume ? `\nResume: ${data.resume}` : ""}${
+      data.linkedinProfile ? `\nLinkedIn: ${data.linkedinProfile}` : ""
+    }${data.githubProfile ? `\nGithub: ${data.githubProfile}` : ""}
 `;
 
     const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(

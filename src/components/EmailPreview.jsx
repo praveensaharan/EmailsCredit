@@ -16,18 +16,16 @@ const ParentComponent = () => {
   };
 
   return (
-    <div className="flex justify-center items-start p-4 space-x-4 mt-20">
-      {/* Scrollable form card */}
-      <Card className="w-1/2 shadow-lg rounded-lg">
-        <h2 className="text-xl font-bold mb-4">Email Form</h2>
+    <div className="flex flex-col md:flex-row justify-center items-start p-4 space-y-4 md:space-y-0 md:space-x-4 mt-20">
+      <Card className="w-full md:w-1/2 shadow-lg rounded-lg">
+        <h2 className="text-xl font-bold mb-4 text-customGold">Email Form</h2>
         <div className="max-h-[120vh] overflow-y-auto">
           <EmailForm onFormChange={handleFormChange} />
         </div>
       </Card>
 
-      {/* Preview card */}
-      <Card className="w-1/2 shadow-lg rounded-lg">
-        <h2 className="text-xl font-bold mb-4">Preview</h2>
+      <Card className="w-full md:w-1/2 shadow-lg rounded-lg bg-customLightBlue">
+        <h2 className="text-xl font-bold mb-4 text-customBlue">Preview</h2>
         <PreviewComponent
           data={formData}
           email={email}
