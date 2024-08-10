@@ -419,7 +419,7 @@ const Nav = () => {
               </SignedOut>
               <SignedIn>
                 <UserButton className="text-black bg-orange hover:bg-black rounded-full px-4 py-2 transition duration-300 ease-in-out" />
-                <span className="ml-4 text-sm font-semibold">
+                <span className="ml-4 text-sm font-semibold shadow-2xl rounded-2xl border-2 py-1 px-2 hover:bg-slate-50 hover:shadow-none transition-all duration-300 ease-in-out transform hover:scale-105">
                   {credits === null ? (
                     <Spin />
                   ) : error ? (
@@ -461,6 +461,7 @@ const Nav = () => {
             >
               Home
             </Link>
+
             <Link
               to="/unblure"
               className={`block rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 hover:bg-orange hover:bg-opacity-20 ${
@@ -482,6 +483,17 @@ const Nav = () => {
               onClick={() => setToggleMenu(false)}
             >
               Price
+            </Link>
+            <Link
+              to="/add-emails"
+              className={`block rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 hover:bg-orange hover:bg-opacity-20 ${
+                currentPath === "/"
+                  ? "bg-orange bg-opacity-80 text-white hover:text-orange"
+                  : "text-black"
+              }`}
+              onClick={() => setToggleMenu(false)}
+            >
+              Add Emails
             </Link>
           </div>
         )}
