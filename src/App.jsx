@@ -11,7 +11,8 @@ import CouponCard from "./components/CouponCard";
 import Additional from "./components/PaymentOptions";
 import Insights from "./components/Insights";
 import EmailPreview from "./components/EmailPreview";
-import TextToEmail from "./components/Texttoemail/Home";
+import TextToEmail from "./components/Texttoemail/Starter";
+import Footer from "./components/Footer";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -32,7 +33,7 @@ const generateRandomAnimation = () => {
 const App = () => {
   return (
     <Router>
-      <div>
+      <div className="flex flex-col min-h-screen">
         <Nav />
         <div className="relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-4">
@@ -73,7 +74,6 @@ const App = () => {
                   </SignedOut>
                   <SignedIn>
                     <Unblure />
-                    <TextToEmail />
                   </SignedIn>
                 </>
               }
@@ -118,8 +118,22 @@ const App = () => {
                 </>
               }
             />
+            <Route
+              path="/add-emails"
+              element={
+                <>
+                  <SignedOut>
+                    <Protected />
+                  </SignedOut>
+                  <SignedIn>
+                    <TextToEmail />
+                  </SignedIn>
+                </>
+              }
+            />
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
   );

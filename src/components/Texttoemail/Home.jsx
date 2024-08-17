@@ -128,7 +128,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen bg-lightgray pt-8 pb-4 sm:pt-24 sm:pb-20 mt-10">
+      <div className="flex justify-center items-center min-h-screen bg-lightgray pt-2 pb-4 sm:pt-2 sm:pb-20 mt-2">
         <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-md sm:max-w-lg">
           <Title level={2} className="mb-2 sm:mb-4 text-center text-black">
             Send a Message or Image
