@@ -50,7 +50,7 @@ const CouponCard = () => {
               className="flex items-center gap-2 font-bold text-customBlue"
             >
               <FaRegPaperPlane className="h-6 w-6 text-customGold animate-bounce" />
-              <span>Paper.io</span>
+              <span>EmailsCredits</span>
             </Link>
           </div>
           <h3 className="text-2xl font-semibold my-4">
