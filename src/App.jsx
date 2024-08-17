@@ -11,6 +11,7 @@ import CouponCard from "./components/CouponCard";
 import Additional from "./components/PaymentOptions";
 import Insights from "./components/Insights";
 import EmailPreview from "./components/EmailPreview";
+import TextToEmail from "./components/Texttoemail/Home";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -72,6 +73,7 @@ const App = () => {
                   </SignedOut>
                   <SignedIn>
                     <Unblure />
+                    <TextToEmail />
                   </SignedIn>
                 </>
               }
