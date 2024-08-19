@@ -9,6 +9,7 @@ const BaseUrl = "https://pricemailbackend.vercel.app";
 export const ApiProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [unlockdata, setUnlockdata] = useState([]);
+  const [resultsEmailsdata, setResultsEmailsdata] = useState([]);
   const [credits, setCredits] = useState(null);
   const [loading, setLoading] = useState(true);
   const [transactions, setTransactions] = useState([]);
@@ -24,6 +25,7 @@ export const ApiProvider = ({ children }) => {
         fetchTransactionsEmails(),
         fetchUnlockEmails(),
         fetchInsights(),
+        fetchResultsEmails(),
       ]).finally(() => setLoading(false));
     }
   }, [session]);
@@ -68,6 +70,26 @@ export const ApiProvider = ({ children }) => {
 
         if (response.status === 200) {
           setUnlockdata(response.data);
+        }
+      } catch (err) {
+        console.error("Error fetching unlock data:", err.message);
+      }
+    }
+  };
+
+  const fetchResultsEmails = async () => {
+    if (session) {
+      try {
+        const token = await session.getToken();
+        const response = await axios.get(
+          `https://s3-to-emai.vercel.app/result`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        if (response.status === 200) {
+          setResultsEmailsdata(response.data);
         }
       } catch (err) {
         console.error("Error fetching unlock data:", err.message);
@@ -216,6 +238,7 @@ export const ApiProvider = ({ children }) => {
         data,
         credits,
         unlockdata,
+        resultsEmailsdata,
         fetchSearchResults,
         addToEmailsCredits,
         verifyEmails,
