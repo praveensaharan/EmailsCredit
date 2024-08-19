@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Nav from "./components/Nav";
 import Emails from "./components/Emails";
 import Unblure from "./components/Unblure";
@@ -13,6 +18,7 @@ import Insights from "./components/Insights";
 import EmailPreview from "./components/EmailPreview";
 import TextToEmail from "./components/Texttoemail/Starter";
 import Footer from "./components/Footer";
+import NotExist from "./components/NotExist";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -127,6 +133,19 @@ const App = () => {
                   </SignedOut>
                   <SignedIn>
                     <TextToEmail />
+                  </SignedIn>
+                </>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <>
+                  <SignedOut>
+                    <Navigate to="/" />
+                  </SignedOut>
+                  <SignedIn>
+                    <NotExist />
                   </SignedIn>
                 </>
               }

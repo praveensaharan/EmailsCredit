@@ -1,4 +1,3 @@
 add companies compensation
 making a email setup and generate response from ai
 make the home page
-add the emails store and results

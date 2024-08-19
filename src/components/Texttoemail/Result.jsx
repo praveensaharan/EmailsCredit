@@ -8,40 +8,42 @@ import {
   ArrowRightOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
+import { useApi } from "../../ContextApi/CreditsContext";
 const Baseurl = "https://s3-to-emai.vercel.app";
 
 const { confirm } = Modal;
 const { Option } = Select;
 
 const ResultsComponent = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [data, setData] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [editRecord, setEditRecord] = useState(null);
   const [editForm] = Form.useForm();
   const { session } = useSession();
+  const { setLoading, loading, resultsEmailsdata: data } = useApi();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (session) {
-        try {
-          const token = await session.getToken();
-          const response = await axios.get(`${Baseurl}/result`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setData(response.data);
-        } catch (error) {
-          console.error("Error fetching the data", error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (session) {
+  //       try {
+  //         const token = await session.getToken();
+  //         const response = await axios.get(`${Baseurl}/result`, {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         });
+  //         setData(response.data);
+  //       } catch (error) {
+  //         console.error("Error fetching the data", error);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     }
+  //   };
 
-    fetchData();
-  }, [session]);
+  //   fetchData();
+  // }, [session]);
 
   const handleEdit = (record) => {
     setEditRecord(record);
