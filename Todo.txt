@@ -1,3 +1,6 @@
 add companies compensation
 making a email setup and generate response from ai
 make the home page
+
+
+Bug: when we add new email then results data needs to fetch again
