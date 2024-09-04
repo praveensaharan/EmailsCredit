@@ -19,6 +19,7 @@ import EmailPreview from "./components/EmailPreview";
 import TextToEmail from "./components/Texttoemail/Starter";
 import Footer from "./components/Footer";
 import NotExist from "./components/NotExist";
+import HomePage from "./components/HomePage/Home";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -62,7 +63,8 @@ const App = () => {
               element={
                 <>
                   <SignedOut>
-                    <Protected />
+                    <HomePage />
+                    {/* <Protected /> */}
                   </SignedOut>
                   <SignedIn>
                     <Emails />
