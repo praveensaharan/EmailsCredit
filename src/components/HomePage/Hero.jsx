@@ -27,7 +27,7 @@ function BackgroundShapes() {
   return (
     <>
       <motion.div
-        className="absolute left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 dark:opacity-30"
+        className="absolute left-0 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 dark:opacity-30"
         animate={{
           scale: [2, 3, 3, 2, 2],
           rotate: [0, 0, 270, 270, 0],
@@ -42,7 +42,7 @@ function BackgroundShapes() {
         }}
       />
       <motion.div
-        className="absolute right-0 w-72 h-72 bg-red-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 dark:opacity-30"
+        className="absolute right-0 w-72 h-72 bg-red-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 dark:opacity-30"
         animate={{
           scale: [2, 3, 3, 2, 2],
           rotate: [0, 0, 270, 270, 0],
@@ -58,7 +58,7 @@ function BackgroundShapes() {
         }}
       />
       <motion.div
-        className="absolute left-0 w-72 h-72 bg-orange-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 dark:opacity-30"
+        className="absolute left-0 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 dark:opacity-30"
         animate={{
           scale: [2, 3, 3, 2, 2],
           rotate: [0, 0, 270, 270, 0],

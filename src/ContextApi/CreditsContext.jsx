@@ -250,6 +250,7 @@ export const ApiProvider = ({ children }) => {
         fetchTransactionsEmails,
         fetchUnlockEmails,
         ReedemCoupon,
+        fetchTableContents,
         insights,
       }}
     >

@@ -133,6 +133,8 @@ import React, { useRef, useEffect, Suspense, useMemo, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Billboard, Text, TrackballControls } from "@react-three/drei";
+// import { DownOutlined } from "@ant-design/icons";
+import { RiScrollToBottomLine } from "react-icons/ri";
 
 // Define your colors
 const colors = {
@@ -226,43 +228,39 @@ function Cloud({ count = 120, radius = 30 }) {
 }
 
 export default function RandomWords() {
+  // const scrollToContent = () => {
+  //   window.scrollBy({ top: 1800, behavior: "smooth" });
+  // };
   const scrollToContent = () => {
-    window.scrollTo({ top: 1800, behavior: "smooth" });
+    window.scrollTo({
+      top: 1800,
+      behavior: "smooth",
+    });
   };
-
   return (
     <>
-      <Canvas
-        dpr={[1, 2]}
-        camera={{ position: [0, 0, 35], fov: 90 }}
-        style={{ background: colors.background }}
-      >
-        <fog attach="fog" args={[colors.background, 0, 80]} />
-        <Suspense fallback={null}>
-          <group rotation={[0, 0, 0]}>
-            <Cloud count={120} radius={30} />
-          </group>
-        </Suspense>
-        <TrackballControls />
-      </Canvas>
+      <section className="relative w-full h-screen bg-background">
+        <Canvas
+          dpr={[1, 2]}
+          camera={{ position: [0, 0, 35], fov: 90 }}
+          // style={{ background: colors.background }}
+        >
+          <fog attach="fog" args={[colors.background, 0, 80]} />
+          <Suspense fallback={null}>
+            <group rotation={[0, 0, 0]}>
+              <Cloud count={120} radius={30} />
+            </group>
+          </Suspense>
+          <TrackballControls />
+        </Canvas>
 
-      <button
-        onClick={scrollToContent}
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          padding: "10px 20px",
-          backgroundColor: colors.accent.DEFAULT,
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-        }}
-      >
-        Scroll Down
-      </button>
+        <button
+          onClick={scrollToContent}
+          className="absolute animate-bounce bottom-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 py-2 bg-destructive text-white rounded-lg shadow-lg hover:bg-[hsl(198,60%,40%)] transition-all cursor-pointer flex items-center gap-2"
+        >
+          <RiScrollToBottomLine className="text-4xl" />
+        </button>
+      </section>
     </>
   );
 }
