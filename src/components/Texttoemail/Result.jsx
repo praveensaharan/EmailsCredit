@@ -21,7 +21,12 @@ const ResultsComponent = () => {
   const [editRecord, setEditRecord] = useState(null);
   const [editForm] = Form.useForm();
   const { session } = useSession();
-  const { setLoading, loading, resultsEmailsdata: data } = useApi();
+  const {
+    setLoading,
+    loading,
+    resultsEmailsdata: data,
+    setResultsEmailsdata: setData,
+  } = useApi();
 
   // useEffect(() => {
   //   const fetchData = async () => {

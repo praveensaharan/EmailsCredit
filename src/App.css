@@ -35,3 +35,8 @@
     background-size: 200% 100%;
     animation: wave 1.6s linear infinite;
 }
+
+:root {
+    --font-heading: 'Bricolage Grotesque', sans-serif;
+    --font-body: 'Space Mono', monospace;
+}

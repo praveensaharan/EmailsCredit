@@ -1,0 +1,53 @@
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+    animation: float 5s ease-in-out infinite;
+}
+
+.particle-1 {
+    width: 150px;
+    height: 150px;
+    top: 10%;
+    left: 30%;
+    animation-duration: 7s;
+}
+
+.particle-2 {
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 70%;
+    animation-duration: 10s;
+}
+
+.particle-3 {
+    width: 120px;
+    height: 120px;
+    top: 75%;
+    left: 40%;
+    animation-duration: 8s;
+}
+
+.particle-4 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    left: 80%;
+    animation-duration: 12s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-20px) translateX(10px) scale(1.1);
+    }
+
+    100% {
+        transform: translateY(0) translateX(0) scale(1);
+    }
+}

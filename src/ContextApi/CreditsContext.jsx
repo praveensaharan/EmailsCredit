@@ -239,6 +239,7 @@ export const ApiProvider = ({ children }) => {
         credits,
         unlockdata,
         resultsEmailsdata,
+        setResultsEmailsdata,
         fetchSearchResults,
         addToEmailsCredits,
         verifyEmails,
@@ -249,6 +250,7 @@ export const ApiProvider = ({ children }) => {
         fetchTransactionsEmails,
         fetchUnlockEmails,
         ReedemCoupon,
+        fetchTableContents,
         insights,
       }}
     >
