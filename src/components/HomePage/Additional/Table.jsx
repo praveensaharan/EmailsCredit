@@ -15,7 +15,7 @@ const DataTable = () => {
   };
 
   return (
-    <div className="mx-auto p-4 rounded-xl shadow-lg mt-16 bg-transparent text-card-foreground font-sans skew-y-6">
+    <div className="mx-auto p-4 rounded-xl shadow-lg mt-16 bg-transparent text-card-foreground font-sans skew-y-6 hover:skew-y-0 transition-all duration-1000">
       {loading ? (
         <div className="flex justify-center">
           <RefreshIcon className="h-8 w-8 animate-spin text-primary" />

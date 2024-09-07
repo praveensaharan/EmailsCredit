@@ -133,7 +133,6 @@ import React, { useRef, useEffect, Suspense, useMemo, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Billboard, Text, TrackballControls } from "@react-three/drei";
-// import { DownOutlined } from "@ant-design/icons";
 import { RiScrollToBottomLine } from "react-icons/ri";
 
 // Define your colors
@@ -228,23 +227,16 @@ function Cloud({ count = 120, radius = 30 }) {
 }
 
 export default function RandomWords() {
-  // const scrollToContent = () => {
-  //   window.scrollBy({ top: 1800, behavior: "smooth" });
-  // };
   const scrollToContent = () => {
     window.scrollTo({
-      top: 1800,
+      top: 1950,
       behavior: "smooth",
     });
   };
   return (
     <>
       <section className="relative w-full h-screen bg-background">
-        <Canvas
-          dpr={[1, 2]}
-          camera={{ position: [0, 0, 35], fov: 90 }}
-          // style={{ background: colors.background }}
-        >
+        <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 35], fov: 90 }}>
           <fog attach="fog" args={[colors.background, 0, 80]} />
           <Suspense fallback={null}>
             <group rotation={[0, 0, 0]}>

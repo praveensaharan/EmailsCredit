@@ -20,6 +20,8 @@ import TextToEmail from "./components/Texttoemail/Starter";
 import Footer from "./components/Footer";
 import NotExist from "./components/NotExist";
 import HomePage from "./components/HomePage/Home";
+import Nav1 from "./components/HomePage/Nav";
+import Footer1 from "./components/HomePage/Footer";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -41,7 +43,13 @@ const App = () => {
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Nav />
+        <SignedOut>
+          <Nav1 />
+        </SignedOut>
+
+        <SignedIn>
+          <Nav />
+        </SignedIn>
         <div className="relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-4">
             {[...Array(30)].map((_, index) => (
@@ -154,7 +162,13 @@ const App = () => {
             />
           </Routes>
         </div>
-        <Footer />
+
+        <SignedOut>
+          <Footer1 />
+        </SignedOut>
+        <SignedIn>
+          <Footer />
+        </SignedIn>
       </div>
     </Router>
   );
