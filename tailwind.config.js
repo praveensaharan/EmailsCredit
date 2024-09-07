@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         heading: ["var(--font-heading)", "sans-serif"], // Bricolage Grotesque
         body: ["var(--font-body)", "monospace"], // Space Mono
+        handjet: ["Handjet", "sans-serif"],
       },
       colors: {
         customGold: "#d79922",

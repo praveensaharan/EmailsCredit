@@ -7,17 +7,20 @@ import FeaturesSection from "./FeaturesSection";
 import FadeInSection from "./FadeInSection";
 import Three1 from "./three";
 import Random from "./random";
+import Cool3 from "./Additional/Cool3";
 
 const Home = () => {
   return (
     <>
       <Hero />
-      <div style={{ width: "100vw", height: "100vh" }}>
+      <div>
         <Three1 />
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <Random />
       </div>
+
+      <Cool3 />
       <FadeInSection>
         <HowItWorksSection />
       </FadeInSection>
