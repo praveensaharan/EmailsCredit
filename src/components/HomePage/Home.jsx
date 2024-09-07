@@ -20,21 +20,13 @@ const Home = () => {
       <div style={{ width: "100vw", height: "100vh" }}>
         <Random />
       </div>
-      {/* <ZoomTransition /> */}
 
       {/* <Cool3 />
       <FadeInSection>
         <HowItWorksSection />
       </FadeInSection> */}
-      {/* <FadeInSection>
-        <TestimonialsSection />
-      </FadeInSection> */}
-      <FadeInSection>
-        <PricingSection />
-      </FadeInSection>
-      {/* <FadeInSection>
-        <FeaturesSection />
-      </FadeInSection> */}
+
+      <PricingSection />
     </>
   );
 };

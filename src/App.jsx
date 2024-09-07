@@ -9,7 +9,7 @@ import Nav from "./components/Nav";
 import Emails from "./components/Emails";
 import Unblure from "./components/Unblure";
 import Payment from "./components/Payment";
-import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react"; // Import useUser
 import Protected from "./components/Protected";
 import "./App.css";
 import CouponCard from "./components/CouponCard";
@@ -22,6 +22,7 @@ import NotExist from "./components/NotExist";
 import HomePage from "./components/HomePage/Home";
 import Nav1 from "./components/HomePage/Nav";
 import Footer1 from "./components/HomePage/Footer";
+import Loading1 from "./components/Loading"; // Import Loading1
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -40,6 +41,10 @@ const generateRandomAnimation = () => {
 };
 
 const App = () => {
+  const { isLoaded } = useUser();
+  if (!isLoaded) {
+    return <Loading1 />;
+  }
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
