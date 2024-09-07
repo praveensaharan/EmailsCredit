@@ -8,17 +8,19 @@ import FadeInSection from "./FadeInSection";
 import Three1 from "./three";
 import Random from "./random";
 import Cool3 from "./Additional/Cool3";
+import ZoomTransition from "./Additional/ZoomTransition";
 
 const Home = () => {
   return (
     <>
       <Hero />
-      <div>
+      <div style={{ width: "100vw", height: "110vh" }}>
         <Three1 />
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <Random />
       </div>
+      {/* <ZoomTransition /> */}
 
       <Cool3 />
       <FadeInSection>

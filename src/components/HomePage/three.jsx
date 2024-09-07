@@ -72,24 +72,23 @@ export default function ThreeScene() {
       ref={ref}
       className="relative w-full h-full bg-gradient-to-b from-accent-foreground to-blue-900"
     >
-      <div className="absolute inset-0 w-full flex">
+      <div className="absolute inset-0 w-full flex flex-col lg:flex-row">
         <div
-          className="w-2/5 p-4 flex items-center justify-center text-foreground text-6xl font-bold leading-tight overflow-hidden"
+          className="lg:w-2/5 w-full p-4 flex items-center justify-center text-foreground text-4xl lg:text-6xl font-bold leading-tight overflow-hidden"
           style={{
             wordBreak: "break-word",
-            background: "rgba(0, 0, 0, 0.6)", // Add a background for better text visibility
-            padding: "20px", // Add some padding for the text
+            background: "rgba(0, 0, 0, 0.6)", // Background for better text visibility
+            padding: "20px", // Padding for the text
           }}
         >
           "But afterwards there occurred violent earthquakes and floods; and in
-          a single daya."
+          a single day."
         </div>
-        <Table
-          dataSource={dataSource}
-          columns={columns}
-          className="w-3/5 overflow-auto p-10 bg-accent-foreground"
-        />
+        <div className="lg:w-3/5 w-full overflow-auto p-4 lg:p-10 bg-accent-foreground">
+          <Table dataSource={dataSource} columns={columns} />
+        </div>
       </div>
+
       <Canvas
         shadows
         frameloop="demand"
