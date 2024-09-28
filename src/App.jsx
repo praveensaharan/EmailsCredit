@@ -23,6 +23,7 @@ import HomePage from "./components/HomePage/Home";
 import Nav1 from "./components/HomePage/Nav";
 import Footer1 from "./components/HomePage/Footer";
 import Loading1 from "./components/Loading"; // Import Loading1
+import Compensation from "./components/Compensation/Home";
 
 const generateRandomAnimation = () => {
   const animationDuration = `${Math.random() * 5 + 3}s`;
@@ -82,6 +83,7 @@ const App = () => {
                   <SignedIn>
                     <Emails />
                     <Insights />
+                    <Compensation />
                   </SignedIn>
                 </>
               }
