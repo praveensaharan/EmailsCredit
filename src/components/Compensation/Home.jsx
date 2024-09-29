@@ -23,37 +23,50 @@ const Home = () => {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      {/* Buttons for switching between tabs */}
-      <div className="flex justify-center mb-6 space-x-4">
-        <button
-          onClick={() => setActiveTab("All")}
-          className={`px-4 py-2 font-semibold rounded-lg transition-all duration-150 ${
-            activeTab === "All" ? "bg-blue-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          All
-        </button>
-        <button
-          onClick={() => setActiveTab("Iit")}
-          className={`px-4 py-2 font-semibold rounded-lg transition-all duration-150 ${
-            activeTab === "Iit" ? "bg-blue-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          IIT
-        </button>
-        <button
-          onClick={() => setActiveTab("Leetcode")}
-          className={`px-4 py-2 font-semibold rounded-lg transition-all duration-150 ${
-            activeTab === "Leetcode" ? "bg-blue-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          Leetcode
-        </button>
+    <div className="min-h-screen flex flex-col mt-20">
+      {/* Navbar */}
+      <div>
+        <div className="container mx-auto flex justify-center items-center p-4">
+          <button
+            type="button"
+            onClick={() => setActiveTab("All")}
+            className={`${
+              activeTab === "All"
+                ? "bg-orange-400 text-white"
+                : "bg-white text-customBlue border-teal-500 hover:bg-slate-300"
+            } w-1/2 max-w-xs mx-2 font-semibold py-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105 shadow-md`}
+          >
+            All
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("Iit")}
+            className={`${
+              activeTab === "Iit"
+                ? "bg-orange-400 text-white"
+                : "bg-white text-customBlue border-teal-500 hover:bg-slate-300"
+            } w-1/2 max-w-xs mx-2 font-semibold py-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105 shadow-md`}
+          >
+            IIT
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("Leetcode")}
+            className={`${
+              activeTab === "Leetcode"
+                ? "bg-orange-400 text-white"
+                : "bg-white text-customBlue border-teal-500 hover:bg-slate-300"
+            } w-1/2 max-w-xs mx-2 font-semibold py-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105 shadow-md`}
+          >
+            Leetcode
+          </button>
+        </div>
       </div>
 
-      {/* Rendering the content based on the active tab */}
-      <div>{renderContent()}</div>
+      {/* Content */}
+      <div className="flex-grow p-6 bg-white rounded-lg shadow-md">
+        {renderContent()}
+      </div>
 
       {/* Insights component always visible at the bottom */}
       <div className="mt-8">
