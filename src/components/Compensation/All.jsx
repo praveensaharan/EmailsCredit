@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Input } from "antd";
+import { FaSearch } from "react-icons/fa"; // Importing FaSearch from react-icons
 
 const All = () => {
   const [data, setData] = useState([]);
@@ -33,12 +35,10 @@ const All = () => {
     const pattern = e.target.value.toLowerCase();
     setSearchTerm(pattern);
 
-    // Clear previous debounce timeout if the user keeps typing
     if (debounceTimeout) {
       clearTimeout(debounceTimeout);
     }
 
-    // Set a new timeout to fetch data after 2 seconds
     debounceTimeout = setTimeout(() => {
       fetchData(pattern);
     }, 2000);
@@ -47,7 +47,6 @@ const All = () => {
   // Function to format date like "8th May 2021"
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-
     const day = date.getDate();
     const monthNames = [
       "Jan",
@@ -88,10 +87,13 @@ const All = () => {
     const salaryNum = Number(salary);
 
     if (salaryNum >= 10000000) {
-      // Crores
-      return `₹${(salaryNum / 10000000).toFixed(2)} Cr`;
+      // Crores with gold color
+      return (
+        <span style={{ color: "gold" }}>
+          ₹{(salaryNum / 10000000).toFixed(2)} Cr
+        </span>
+      );
     } else if (salaryNum >= 100000) {
-      // Lakhs
       return `₹${(salaryNum / 100000).toFixed(2)} L`;
     } else {
       return `₹${salaryNum.toLocaleString()}`; // Format as normal if below lakh
@@ -99,56 +101,87 @@ const All = () => {
   };
 
   return (
-    <div>
-      <h1>Company Salary Data</h1>
-      <input
-        type="text"
-        placeholder="Search by company name..."
-        value={searchTerm}
-        onChange={handleSearch}
-        style={{
-          marginBottom: "20px",
-          padding: "10px",
-          fontSize: "16px",
-          width: "300px",
-        }}
-      />
+    <div className="min-h-screen bg-white text-[hsl(180,100%,90%)] p-6">
+      <h1 className="text-4xl font-bold mb-8 text-center text-[#d79922]">
+        Company Salary Data
+      </h1>
+
+      <div className="max-w-xl mx-auto mb-8 relative">
+        <Input
+          type="text"
+          placeholder="Search by company name..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="w-full p-4 bg-gray-100 border-[hsl(210,50%,40%)] rounded-full text-orange-500 placeholder-[hsl(200,50%,30%)] focus:ring-2 focus:ring-[#4056a1]"
+        />
+        <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[hsl(200,50%,30%)] h-6 w-6" />
+      </div>
 
       {isLoading ? (
-        <p>Loading...</p>
+        <p className="text-center text-[hsl(180,100%,90%)]">Loading data...</p>
       ) : (
-        <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th>Company</th>
-              <th>Role</th>
-              <th>Date</th>
-              <th>Total Salary</th>
-              <th>Base Salary</th>
-              <th>Experience</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.length > 0 ? (
-              filteredData.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.company}</td>
-                  <td>{item.role}</td>
-                  <td>{formatDate(item.date)}</td>
-                  <td>{formatSalary(item.total_salary)}</td>
-                  <td>{formatSalary(item.base_salary)}</td>
-                  <td>{item.experience}</td>
-                </tr>
-              ))
-            ) : (
+        <div className="overflow-x-auto rounded-lg border border-[hsl(210,50%,40%)]">
+          <table className="w-full border-collapse">
+            <thead className="bg-[hsl(203,23%,30%)]">
               <tr>
-                <td colSpan="6" style={{ textAlign: "center" }}>
-                  No results found
-                </td>
+                {[
+                  "Company",
+                  "Role",
+                  "Date",
+                  "Total Salary",
+                  "Base Salary",
+                  "Experience",
+                ].map((header) => (
+                  <th
+                    key={header}
+                    className="p-4 text-left text-sm font-semibold tracking-wide cursor-pointer hover:bg-[hsl(200,50%,30%)] transition-colors duration-150"
+                  >
+                    {header}
+                  </th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredData.length > 0 ? (
+                filteredData.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    className={`hover:bg-[hsl(200,50%,30%)] transition-colors duration-150 ${
+                      index % 2 === 0
+                        ? "bg-[hsl(210,100%,12%)]"
+                        : "bg-[hsl(210,100%,6%)]"
+                    }`}
+                  >
+                    <td className="p-4 text-[#efe2ba] font-medium">
+                      {item.company}
+                    </td>
+                    <td className="p-4 text-[hsl(180,100%,90%)]">
+                      {item.role}
+                    </td>
+                    <td className="p-4 text-[hsl(180,100%,90%)]">
+                      {formatDate(item.date)}
+                    </td>
+                    <td className="p-4 text-[#f13c20] font-semibold">
+                      {formatSalary(item.total_salary)}
+                    </td>
+                    <td className="p-4 text-[#c5cbe3]">
+                      {formatSalary(item.base_salary)}
+                    </td>
+                    <td className="p-4 text-[hsl(180,100%,90%)]">
+                      {item.experience}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="py-6 text-center text-orange-500">
+                    No results found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
